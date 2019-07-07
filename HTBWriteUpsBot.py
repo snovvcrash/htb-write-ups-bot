@@ -10,6 +10,7 @@ __version__   = '0.1'
 __site__      = 'https://github.com/snovvcrash/htb-write-ups-bot'
 __brief__     = "Telegram bot for pillaging [@ippsec](https://www.youtube.com/channel/UCa6eh7gCkpPo5XXUDfygQQA)'s and [@0xdf](https://0xdf.gitlab.io/)'s HackTheBox write-ups"
 
+import os
 from datetime import datetime
 
 import telebot as tb
