@@ -71,13 +71,13 @@ def latest_or_by_name(message):
 			markup.row(box)
 
 		msg = bot.send_message(message.chat.id, 'Select box by name', reply_markup=markup)
-		bot.register_next_step_handler(msg, lambda m: _get_box_by_name(m, htb_videos))
+		bot.register_next_step_handler(msg, lambda m: get_box_by_name(m, htb_videos))
 
 	elif message.text == 'Latest box':  # get_latest_box()
 		htb_videos = extract_htb_videos(youtube, count=1)
 		title, url, description = htb_videos[0]
 		description = _add_timecodes_to_description(description, url)
-		posts_by_0xdf = get_0xdf_posts(title[13:])
+		posts_by_0xdf = _get_0xdf_posts(title[13:])
 
 		send_back = f"""\
 			ippsec: [{title}]({url})
@@ -90,14 +90,14 @@ def latest_or_by_name(message):
 		msg = bot.send_message(message.chat.id, 'Happy hacking! Run /start to start over')
 
 
-def _get_box_by_name(message, htb_videos):
+def get_box_by_name(message, htb_videos):
 	box_name = message.text
 
 	for title, url, description in htb_videos:
 		if title[13:].lower().startswith(box_name.lower()):
 			if description:
 				description = _add_timecodes_to_description(description, url)
-				posts_by_0xdf = get_0xdf_posts(box_name)
+				posts_by_0xdf = _get_0xdf_posts(box_name)
 
 				send_back = f"""\
 					ippsec: [{title}]({url})
@@ -120,18 +120,22 @@ def _add_timecodes_to_description(description, url):
 	for line in description.split('\n'):
 		timecode_index = line.find(' -', 1)
 		timecode, remaining_part = line[:timecode_index], line[timecode_index+1:]
-		if len(timecode) == 5:  # MM:SS
-			timestamp = datetime.strptime(timecode, '%M:%S')
-		elif len(timecode) == 8:  # HH:MM:SS
-			timestamp = datetime.strptime(timecode, '%H:%M:%S')
 
-		url_with_timecode_md = f'[{timecode}]({url}&t={int((timestamp - datetime(1900, 1, 1)).total_seconds())})'
-		description_with_timecodes.append(url_with_timecode_md + remaining_part)
+		try:
+			if len(timecode) == 5:  # MM:SS
+				timestamp = datetime.strptime(timecode, '%M:%S')
+			elif len(timecode) == 8:  # HH:MM:SS
+				timestamp = datetime.strptime(timecode, '%H:%M:%S')
+		except ValueError:
+			description_with_timecodes.append(timecode + remaining_part)
+		else:
+			url_with_timecode_md = f'[{timecode}]({url}&t={int((timestamp - datetime(1900, 1, 1)).total_seconds())})'
+			description_with_timecodes.append(url_with_timecode_md + remaining_part)
 
 	return description_with_timecodes
 
 
-def get_0xdf_posts(box_name):
+def _get_0xdf_posts(box_name):
 	htb_posts = extract_htb_posts()
 
 	post_matches = []
