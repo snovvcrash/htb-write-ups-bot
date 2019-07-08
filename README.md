@@ -1,11 +1,6 @@
 htb-write-ups-bot
 ==========
 
-[![htb-write-ups-bot-version.svg](https://img.shields.io/badge/ver-0.1-red.svg)](https://github.com/snovvcrash/htb-write-ups-bot)
-[![python-version.svg](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads)
-[![license.svg](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/snovvcrash/htb-write-ups-bot/master/LICENSE)
-[![built-with-love.svg](https://img.shields.io/badge/built%20with-%F0%9F%92%97%F0%9F%92%97%F0%9F%92%97-lightgrey.svg)](https://emojipedia.org/growing-heart)
-
 <img src="https://user-images.githubusercontent.com/23141800/60811057-2b4b4e80-a197-11e9-8a17-4df4c758b16f.png" alt="banner.png" align="left" />
 
 **htb-write-ups-bot** — is a proof-of-concept [Telegram bot](https://t.me/HTBWriteUpsBot) that allows you to search through retired [HackTheBox](https://www.hackthebox.eu/ "Hack The Box :: Penetration Testing Labs") machines for write-ups. It is based on the official YouTube API module for Python (for looting the [@ippsec](https://www.youtube.com/channel/UCa6eh7gCkpPo5XXUDfygQQA "IppSec - YouTube")'s YT blog) and bs4 HTML parsing module (for looting the [@0xdf](https://0xdf.gitlab.io/ "0xdf hacks stuff")'s blog).
