@@ -71,12 +71,12 @@ def latest_or_by_name(message):
 			markup.row(box)
 
 		msg = bot.send_message(message.chat.id, 'Select box by name', reply_markup=markup)
-		bot.register_next_step_handler(msg, lambda m: get_box_by_name(m, htb_videos))
+		bot.register_next_step_handler(msg, lambda m: _get_box_by_name(m, htb_videos))
 
 	elif message.text == 'Latest box':  # get_latest_box()
 		htb_videos = extract_htb_videos(youtube, count=1)
 		title, url, description = htb_videos[0]
-		description = add_timecodes_to_description(description, url)
+		description = _add_timecodes_to_description(description, url)
 		posts_by_0xdf = get_0xdf_posts(title[13:])
 
 		send_back = f"""\
@@ -88,16 +88,15 @@ def latest_or_by_name(message):
 
 		bot.send_message(message.chat.id, send_back, parse_mode='Markdown')
 		msg = bot.send_message(message.chat.id, 'Happy hacking!')
-		handle_start(message)
 
 
-def get_box_by_name(message, htb_videos):
+def _get_box_by_name(message, htb_videos):
 	box_name = message.text
 
 	for title, url, description in htb_videos:
 		if title[13:].lower().startswith(box_name.lower()):
 			if description:
-				description = add_timecodes_to_description(description, url)
+				description = _add_timecodes_to_description(description, url)
 				posts_by_0xdf = get_0xdf_posts(box_name)
 
 				send_back = f"""\
@@ -113,10 +112,9 @@ def get_box_by_name(message, htb_videos):
 			bot.send_message(message.chat.id, send_back, parse_mode='Markdown')
 
 	msg = bot.send_message(message.chat.id, 'Happy hacking!')
-	handle_start(message)
 
 
-def add_timecodes_to_description(description, url):
+def _add_timecodes_to_description(description, url):
 	description_with_timecodes = []
 
 	for line in description.split('\n'):
@@ -146,7 +144,7 @@ def get_0xdf_posts(box_name):
 
 
 def main():
-	bot.polling(none_stop=False, interval=0, timeout=20)
+	bot.polling(none_stop=True, interval=0, timeout=20)
 
 
 if __name__ == '__main__':
