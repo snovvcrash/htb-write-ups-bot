@@ -87,7 +87,7 @@ def latest_or_by_name(message):
 		""".replace('\t', '')
 
 		bot.send_message(message.chat.id, send_back, parse_mode='Markdown')
-		msg = bot.send_message(message.chat.id, 'Happy hacking!')
+		msg = bot.send_message(message.chat.id, 'Happy hacking! Run /start to start over')
 
 
 def _get_box_by_name(message, htb_videos):
@@ -111,7 +111,7 @@ def _get_box_by_name(message, htb_videos):
 
 			bot.send_message(message.chat.id, send_back, parse_mode='Markdown')
 
-	msg = bot.send_message(message.chat.id, 'Happy hacking!')
+	msg = bot.send_message(message.chat.id, 'Happy hacking! Run /start to start over')
 
 
 def _add_timecodes_to_description(description, url):
