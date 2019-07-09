@@ -51,7 +51,7 @@ def handle_start(message):
 def handle_about(message):
 	bot.send_message(
 		message.chat.id,
-		f'{__brief__}\n(by [{__author__[14:-1]}]({__site__.rsplit("/", 2)[0]}))',
+		f'{__brief__}\n(by [{__author__[14:-1]}]({__site__.rsplit("/", 1)[0]}))',
 		parse_mode='Markdown'
 	)
 
