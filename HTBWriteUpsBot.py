@@ -27,8 +27,8 @@ if TG_TOKEN:
 	from telebot import apihelper
 	bot = tb.TeleBot(TG_TOKEN)
 	apihelper.proxy = {
-		'http': 'socks4://IP:PORT',
-		'https': 'socks4://IP:PORT'
+		'http': 'socks4://127.0.0.1:9150',
+		'https': 'socks4://127.0.0.1:9150'
 	}  # TOR
 else:
 	bot = tb.TeleBot(os.environ.get('TG_TOKEN'))
@@ -36,15 +36,19 @@ else:
 
 @bot.message_handler(commands=['start'])
 def handle_start(message):
-	box_by_name = tb.types.KeyboardButton('Select box by name')
-	latest_box = tb.types.KeyboardButton('Latest box')
+	try:
+		box_by_name = tb.types.KeyboardButton('Select box by name')
+		latest_box = tb.types.KeyboardButton('Latest box')
 
-	markup = tb.types.ReplyKeyboardMarkup()
-	markup.row(box_by_name)
-	markup.row(latest_box)
+		markup = tb.types.ReplyKeyboardMarkup()
+		markup.row(box_by_name)
+		markup.row(latest_box)
 
-	msg = bot.send_message(message.chat.id, 'Make your choice', reply_markup=markup)
-	bot.register_next_step_handler(msg, latest_or_by_name)
+		msg = bot.send_message(message.chat.id, 'Make your choice', reply_markup=markup)
+		bot.register_next_step_handler(msg, latest_or_by_name)
+
+	except Exception:
+		bot.send_message(message.chat.id, 'Something went wrong. Run /start to start over')
 
 
 @bot.message_handler(commands=['about'])
@@ -57,69 +61,77 @@ def handle_about(message):
 
 
 def latest_or_by_name(message):
-	youtube = get_youtube()
+	try:
+		youtube = get_youtube()
 
-	if message.text == 'Select box by name':
-		htb_videos = extract_htb_videos(youtube, count=31337)
+		if message.text == 'Select box by name':
+			htb_videos = extract_htb_videos(youtube, count=31337)
 
-		boxes = []
-		for title, _, _ in htb_videos:
-			boxes.append(tb.types.KeyboardButton(title[13:]))  # 13 is len('HackTheBox - ')
+			boxes = []
+			for title, _, _ in htb_videos:
+				boxes.append(tb.types.KeyboardButton(title[13:]))  # 13 is len('HackTheBox - ')
 
-		markup = tb.types.ReplyKeyboardMarkup()
-		for box in boxes:
-			markup.row(box)
+			markup = tb.types.ReplyKeyboardMarkup()
+			for box in boxes:
+				markup.row(box)
 
-		msg = bot.send_message(message.chat.id, 'Select box by name', reply_markup=markup)
-		bot.register_next_step_handler(msg, lambda m: get_box_by_name(m, htb_videos))
+			msg = bot.send_message(message.chat.id, 'Select box by name', reply_markup=markup)
+			bot.register_next_step_handler(msg, lambda m: get_box_by_name(m, htb_videos))
 
-	elif message.text == 'Latest box':  # get_latest_box()
-		htb_videos = extract_htb_videos(youtube, count=1)
-		title, url, description = htb_videos[0]
-		description = _add_timecodes_to_description(description, url)
-		posts_by_0xdf = _get_0xdf_posts(title[13:])
+		elif message.text == 'Latest box':  # get_latest_box()
+			htb_videos = extract_htb_videos(youtube, count=1)
+			title, url, description = htb_videos[0]
+			description = _add_timecodes_to_description(description, url)
+			posts_by_0xdf = _get_0xdf_posts(title[13:])
 
-		send_back = f"""\
-			ippsec: [{title}]({url})
-			{NEWLINE.join(posts_by_0xdf)}
+			send_back = f"""\
+				ippsec: [{title}]({url})
+				{NEWLINE.join(posts_by_0xdf)}
 
-			{NEWLINE.join(description)}\
-		""".replace('\t', '')
+				{NEWLINE.join(description)}\
+			""".replace('\t', '')
 
-		bot.send_message(message.chat.id, send_back, parse_mode='Markdown')
-		msg = bot.send_message(message.chat.id, 'Happy hacking! Run /start to start over')
+			bot.send_message(message.chat.id, send_back, parse_mode='Markdown')
+			msg = bot.send_message(message.chat.id, 'Happy hacking! Run /start to start over')
+
+	except Exception:
+		bot.send_message(message.chat.id, 'Something went wrong. Run /start to start over')
 
 
 def get_box_by_name(message, htb_videos):
-	box_name = message.text
+	try:
+		box_name = message.text
 
-	for title, url, description in htb_videos:
-		if title[13:].lower().startswith(box_name.lower()):
-			if description:
-				description = _add_timecodes_to_description(description, url)
-				posts_by_0xdf = _get_0xdf_posts(box_name)
+		for title, url, description in htb_videos:
+			if title[13:].lower().startswith(box_name.lower()):
+				if description:
+					description = _add_timecodes_to_description(description, url)
+					posts_by_0xdf = _get_0xdf_posts(box_name)
 
-				send_back = f"""\
-					ippsec: [{title}]({url})
-					{NEWLINE.join(posts_by_0xdf)}
+					send_back = f"""\
+						ippsec: [{title}]({url})
+						{NEWLINE.join(posts_by_0xdf)}
 
-					{NEWLINE.join(description)}\
-				""".replace('\t', '')
+						{NEWLINE.join(description)}\
+					""".replace('\t', '')
 
-			else:
-				send_back = f'{title}\n{url}'
+				else:
+					send_back = f'{title}\n{url}'
 
-			bot.send_message(message.chat.id, send_back, parse_mode='Markdown')
+				bot.send_message(message.chat.id, send_back, parse_mode='Markdown')
 
-	msg = bot.send_message(message.chat.id, 'Happy hacking! Run /start to start over')
+		msg = bot.send_message(message.chat.id, 'Happy hacking! Run /start to start over')
+
+	except Exception:
+		bot.send_message(message.chat.id, 'Something went wrong. Run /start to start over')
 
 
 def _add_timecodes_to_description(description, url):
 	description_with_timecodes = []
 
 	for line in description.split('\n'):
-		timecode_index = line.find(' -', 1)
-		timecode, remaining_part = line[:timecode_index], line[timecode_index+1:]
+		timecode_index = line.find(' - ', 1)
+		timecode, remaining_part = line[:timecode_index], line[timecode_index+3:]
 
 		try:
 			if len(timecode) == 5:  # MM:SS
@@ -127,10 +139,10 @@ def _add_timecodes_to_description(description, url):
 			elif len(timecode) == 8:  # HH:MM:SS
 				timestamp = datetime.strptime(timecode, '%H:%M:%S')
 		except ValueError:
-			description_with_timecodes.append(timecode + remaining_part)
+			description_with_timecodes.append(f'{timecode} - {remaining_part}')
 		else:
 			url_with_timecode_md = f'[{timecode}]({url}&t={int((timestamp - datetime(1900, 1, 1)).total_seconds())})'
-			description_with_timecodes.append(url_with_timecode_md + remaining_part)
+			description_with_timecodes.append(f'{url_with_timecode_md} - {remaining_part}')
 
 	return description_with_timecodes
 
