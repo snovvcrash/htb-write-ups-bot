@@ -11,9 +11,16 @@ Inspired by [get_ippsec_details.py](https://gist.github.com/sminez/571bd7bafb1b8
 
 [Here](write-ups-md) you can find the Markdown version of all available write-ups with timecodes for the specified date.
 
-Or you can generate such report yourself by running (with `YT_DEVELOPER_KEY` set in `author_ippsec/config.py`):
+Or you can generate such report yourself by running `extract_all_to_md.py` with `YT_DEVELOPER_KEY` set in `author_ippsec/config.py`.
+
+Install dependencies:
 
 ```
-$ python3 -m pip install google-api-python-client requests bs4
+$ pip3 install google-api-python-client requests bs4
+```
+
+Generate report:
+
+```
 $ python3 extract_all_to_md.py
 ```

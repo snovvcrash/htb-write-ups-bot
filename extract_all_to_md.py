@@ -15,8 +15,8 @@ def _add_timecodes_to_description(description, url):
 	description_with_timecodes = []
 
 	for line in description.split('\n'):
-		timecode_index = line.find(' -', 1)
-		timecode, remaining_part = line[:timecode_index], line[timecode_index+1:]
+		timecode_index = line.find(' - ', 1)
+		timecode, remaining_part = line[:timecode_index], line[timecode_index+3:]
 
 		try:
 			if len(timecode) == 5:  # MM:SS
@@ -24,10 +24,10 @@ def _add_timecodes_to_description(description, url):
 			elif len(timecode) == 8:  # HH:MM:SS
 				timestamp = datetime.strptime(timecode, '%H:%M:%S')
 		except ValueError:
-			description_with_timecodes.append(timecode + remaining_part)
+			description_with_timecodes.append(f'{timecode} - {remaining_part}')
 		else:
 			url_with_timecode_md = f'[{timecode}]({url}&t={int((timestamp - datetime(1900, 1, 1)).total_seconds())})'
-			description_with_timecodes.append(url_with_timecode_md + remaining_part)
+			description_with_timecodes.append(f'{url_with_timecode_md} - {remaining_part}')
 
 	return description_with_timecodes
 
