@@ -67,5 +67,5 @@ if __name__ == '__main__':
 
 		extracted.append(item)
 
-	with open(f"write-ups-md/{time.strftime('%Y-%m-%d', time.localtime())}.md", 'w', encoding='utf-8') as f:
+	with open(f'Markdown/{time.strftime("%Y-%m-%d", time.localtime())}.md', 'w', encoding='utf-8') as f:
 		f.write('\n\n-----------------------------------------------------------\n\n'.join(extracted))
