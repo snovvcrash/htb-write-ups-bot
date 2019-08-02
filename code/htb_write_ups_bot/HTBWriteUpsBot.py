@@ -15,9 +15,9 @@ from datetime import datetime
 
 import telebot as tb
 
-from author_ippsec.auth import get_youtube
-from author_ippsec.utils import extract_htb_videos
-from author_0xdf.utils import extract_htb_posts
+from htb_write_ups_bot.author_ippsec.auth import get_youtube
+from htb_write_ups_bot.author_ippsec.utils import extract_htb_videos
+from htb_write_ups_bot.author_0xdf.utils import extract_htb_posts
 
 NEWLINE = '\n'
 

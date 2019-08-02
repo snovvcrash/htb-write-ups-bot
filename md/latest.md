@@ -54,6 +54,72 @@ ippsec: [HackTheBox - CTF](https://youtube.com/watch?v=51JQg202csw)
 
 -----------------------------------------------------------
 
+ippsec: [HackTheBox - LaCasaDePapel](https://youtube.com/watch?v=OSRCEOQQJ4E)
+
+0xdf: [HTB: LaCasaDePapel](https://0xdf.gitlab.io//2019/07/27/htb-lacasadepapel.html)
+
+[01:05](https://youtube.com/watch?v=OSRCEOQQJ4E&t=65) - Start of nmap
+
+[02:50](https://youtube.com/watch?v=OSRCEOQQJ4E&t=170) - Attempting to execute an VSFTPD Backdoor via MSF
+
+[03:40](https://youtube.com/watch?v=OSRCEOQQJ4E&t=220) - Discovering the backdoor opened 6200, discovering a weird shell
+
+[04:50](https://youtube.com/watch?v=OSRCEOQQJ4E&t=290) - Lets figure out what just happened
+
+[06:50](https://youtube.com/watch?v=OSRCEOQQJ4E&t=410) - Triggering the backdoor without Metasploit
+
+[09:05](https://youtube.com/watch?v=OSRCEOQQJ4E&t=545) - Exploring the Psy PHP Shell opened up by the backdoor
+
+[10:20](https://youtube.com/watch?v=OSRCEOQQJ4E&t=620) - Several functions for executing bash aren't working, checking disable_functions
+
+[11:40](https://youtube.com/watch?v=OSRCEOQQJ4E&t=700) - Attempting to bypass disabled_functions (does not work)
+
+[12:50](https://youtube.com/watch?v=OSRCEOQQJ4E&t=770) - Using ScanDir() and File_Get_Contents(), to explore the filesystem
+
+[14:50](https://youtube.com/watch?v=OSRCEOQQJ4E&t=890) - Identifying we are probably running as the Dali User (Unintended Path)
+
+[17:00](https://youtube.com/watch?v=OSRCEOQQJ4E&t=1020) - Downloading CA.KEY, which is a private key to a webserver
+
+[21:40](https://youtube.com/watch?v=OSRCEOQQJ4E&t=1300) - Using the CA.KEY to generate client certificates to access the HTTPS Page
+
+[30:25](https://youtube.com/watch?v=OSRCEOQQJ4E&t=1825) - Weird it didn't work, lets just verify all our certificates are good
+
+[32:28](https://youtube.com/watch?v=OSRCEOQQJ4E&t=1948) - This time it worked! We connected to the server
+
+[33:20](https://youtube.com/watch?v=OSRCEOQQJ4E&t=2000) - Failing to add the certificate to BurpSuite
+
+[33:50](https://youtube.com/watch?v=OSRCEOQQJ4E&t=2030) - Discovering File Traversal by editing the PATH variable
+
+[36:38](https://youtube.com/watch?v=OSRCEOQQJ4E&t=2198) - Discovering the LFI just puts the path as Base64 Encoded
+
+[37:15](https://youtube.com/watch?v=OSRCEOQQJ4E&t=2235) - Using the LFI to download the SSH Private Key
+
+[38:45](https://youtube.com/watch?v=OSRCEOQQJ4E&t=2325) - Testing SSH Key against users on the box to gain access!
+
+[39:13](https://youtube.com/watch?v=OSRCEOQQJ4E&t=2353) - UNINTENDED: Skipping the HTTPS Certificate - Generating SSH Keys to upload via PHP Shell
+
+[40:30](https://youtube.com/watch?v=OSRCEOQQJ4E&t=2430) - UNINTENDED: Using file_put_contents() to append our public key to authorized_keys
+
+[41:30](https://youtube.com/watch?v=OSRCEOQQJ4E&t=2490) - UNINTENDED: Using SSH to tunnel through Dali (SOCKS Proxy)
+
+[42:30](https://youtube.com/watch?v=OSRCEOQQJ4E&t=2550) - UNINTENDED: Scanning ports on Dali that are listening on LocalHost
+
+[43:08](https://youtube.com/watch?v=OSRCEOQQJ4E&t=2588) - UNINTENDED: Port 8000 is open, and its one step after the Reverse_Proxy that performs SSL Authentication!
+
+[45:35](https://youtube.com/watch?v=OSRCEOQQJ4E&t=2735) - Running PSPY and LinEnum
+
+[50:20](https://youtube.com/watch?v=OSRCEOQQJ4E&t=3020) - Using PSPY to view FileSystem Events which will show the cron
+
+[52:30](https://youtube.com/watch?v=OSRCEOQQJ4E&t=3150) - Taking control of ~/memcached.ini because we own the folder!
+
+[54:45](https://youtube.com/watch?v=OSRCEOQQJ4E&t=3285) - Exploiting the cron that utilizes memcached.ini to get a root shell
+
+[55:55](https://youtube.com/watch?v=OSRCEOQQJ4E&t=3355) - Exploring how the SSL Authentication is working
+
+60:00 - Exploring how the VSFTPD Backdoor was modified.
+
+-----------------------------------------------------------
+
 ippsec: [HackTheBox - FriendZone](https://youtube.com/watch?v=Zf8p49IzEEA)
 
 0xdf: [HTB: FriendZone](https://0xdf.gitlab.io//2019/07/13/htb-friendzone.html)

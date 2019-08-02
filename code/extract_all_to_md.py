@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
 import time
 from datetime import datetime
+from argparse import ArgumentParser
 
-from author_ippsec.auth import get_youtube
-from author_ippsec.utils import extract_htb_videos
-from author_0xdf.utils import extract_htb_posts
+from htb_write_ups_bot.author_ippsec.auth import get_youtube
+from htb_write_ups_bot.author_ippsec.utils import extract_htb_videos
+from htb_write_ups_bot.author_0xdf.utils import extract_htb_posts
 
 NEWLINES = '\n\n'
+
+parser = ArgumentParser()
+parser.add_argument('-o', '--output', type=str, default=f'{time.strftime("%Y-%m-%d", time.localtime())}.md')
+args = parser.parse_args()
 
 
 def _add_timecodes_to_description(description, url):
@@ -67,5 +73,5 @@ if __name__ == '__main__':
 
 		extracted.append(item)
 
-	with open(f'Markdown/{time.strftime("%Y-%m-%d", time.localtime())}.md', 'w', encoding='utf-8') as f:
+	with open(os.path.abspath(args.output), 'w', encoding='utf-8') as f:
 		f.write('\n\n-----------------------------------------------------------\n\n'.join(extracted))
