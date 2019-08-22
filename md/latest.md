@@ -1,3 +1,183 @@
+ippsec: [HackTheBox - Helpline](https://youtube.com/watch?v=Vs3oSDlzxwA)
+
+0xdf: [HTB: Helpline](https://0xdf.gitlab.io//2019/08/17/htb-helpline.html)
+
+[00:35](https://youtube.com/watch?v=Vs3oSDlzxwA&t=35) - Begin of Recon
+
+[01:42](https://youtube.com/watch?v=Vs3oSDlzxwA&t=102) - Checking the MangeEngine Page
+
+[02:23](https://youtube.com/watch?v=Vs3oSDlzxwA&t=143) - Running Searchsploit to see potential exploits
+
+[03:40](https://youtube.com/watch?v=Vs3oSDlzxwA&t=220) - Enumerating valid usernames via AjaxDomainServlet
+
+[05:40](https://youtube.com/watch?v=Vs3oSDlzxwA&t=340) - Logging in with guest:guest
+
+[07:10](https://youtube.com/watch?v=Vs3oSDlzxwA&t=430) - Running the privilege escalation script to get Administrator access
+
+[08:00](https://youtube.com/watch?v=Vs3oSDlzxwA&t=480) - Searching for information on this exploit
+
+[08:20](https://youtube.com/watch?v=Vs3oSDlzxwA&t=500) - Blog post missing... Searching Archive.org and Google Cache for a mirror
+
+[10:00](https://youtube.com/watch?v=Vs3oSDlzxwA&t=600) - Making curl go through burp to step through the exploit in BurpSuite
+
+[18:00](https://youtube.com/watch?v=Vs3oSDlzxwA&t=1080) - Copying the admin cookies into FireFox 
+
+[19:25](https://youtube.com/watch?v=Vs3oSDlzxwA&t=1165) - Going to Admin then Custom Triggers to execute code on the server
+
+[21:50](https://youtube.com/watch?v=Vs3oSDlzxwA&t=1310) - Getting a reverse shell via Nishang
+
+[22:30](https://youtube.com/watch?v=Vs3oSDlzxwA&t=1350) - Using iconv to create UTF-16LE encoded Base64 for use with "-EncodedCommand" option
+
+[25:45](https://youtube.com/watch?v=Vs3oSDlzxwA&t=1545) - Reverse Shell as System returned, but EFS Protects the flags
+
+[26:45](https://youtube.com/watch?v=Vs3oSDlzxwA&t=1605) - Finding interesting files with get-childitem -recurse . | select FullName
+
+[28:50](https://youtube.com/watch?v=Vs3oSDlzxwA&t=1730) - Copying mimikatz over to the box to steal NTLM Hashes
+
+[31:00](https://youtube.com/watch?v=Vs3oSDlzxwA&t=1860) - Defender blocked us.  Disable defender with Set-MpPreference -DisableRealtimeMonitoring $true
+
+[32:50](https://youtube.com/watch?v=Vs3oSDlzxwA&t=1970) - Using hashes.org to view password of Zachary, checking his groups to see he can view event logs
+
+[33:30](https://youtube.com/watch?v=Vs3oSDlzxwA&t=2010) - Doing some powershell goodness to search event logs!
+
+[40:50](https://youtube.com/watch?v=Vs3oSDlzxwA&t=2450) - Extracting ProcessCommandLine from the logs (Tolu Password), its a shame Nishang screws with how some commands output to stdout.  This could of been a lot cleaner.
+
+[43:00](https://youtube.com/watch?v=Vs3oSDlzxwA&t=2580) - Using Mimikatz to decrypt the EFS Protected file with Tolu's password
+
+[57:25](https://youtube.com/watch?v=Vs3oSDlzxwA&t=3445) - Need to read Leo's admin-pass.xml, load meterpreter and migrate into his namespace
+
+[01:00:20](https://youtube.com/watch?v=Vs3oSDlzxwA&t=3620) - admin-pass is the output of SecureString, lets decrypt it to get the admin password
+
+[01:02:20](https://youtube.com/watch?v=Vs3oSDlzxwA&t=3740) - Using Invoke-Command with the credential object created to execute commands as administrator
+
+[01:03:50](https://youtube.com/watch?v=Vs3oSDlzxwA&t=3830) - Cannot read root.txt because of "Double Hop Problem" (how PowerShell Authenticates), using CredSSP Authentication to fix this.
+
+-----------------------------------------------------------
+
+ippsec: [HackTheBox - Arkham](https://youtube.com/watch?v=krC5j1Ab44I)
+
+0xdf: [HTB: Arkham](https://0xdf.gitlab.io//2019/08/10/htb-arkham.html)
+
+[00:55](https://youtube.com/watch?v=krC5j1Ab44I&t=55) - Begin of Recon 
+
+[02:20](https://youtube.com/watch?v=krC5j1Ab44I&t=140) - Checking the WebPages
+
+[03:50](https://youtube.com/watch?v=krC5j1Ab44I&t=230) - Examining /userSubscribe.faces, to discover potential deserialization
+
+[05:00](https://youtube.com/watch?v=krC5j1Ab44I&t=300) - Exploring javax.faces.ViewState
+
+[05:50](https://youtube.com/watch?v=krC5j1Ab44I&t=350) - Googling around to see what an unencrypted serialized object should look like
+
+[07:15](https://youtube.com/watch?v=krC5j1Ab44I&t=435) - Checking out SMB to discover an openshare
+
+[09:00](https://youtube.com/watch?v=krC5j1Ab44I&t=540) - Downloading appserver.zip from batshare via smbclient
+
+[11:00](https://youtube.com/watch?v=krC5j1Ab44I&t=660) - Cracking a luks encrypted file with dd and hashcat
+
+[14:00](https://youtube.com/watch?v=krC5j1Ab44I&t=840) - Luks cracked, mounting the disk with luksOpen
+
+[16:20](https://youtube.com/watch?v=krC5j1Ab44I&t=980) - Discovery of the secret used to encrypt the java object
+
+[18:10](https://youtube.com/watch?v=krC5j1Ab44I&t=1090) - Creating a python script to decrypt the ViewState to verify we have correct crypto settings
+
+[23:10](https://youtube.com/watch?v=krC5j1Ab44I&t=1390) - Script completed, lets test the decryption!
+
+[24:15](https://youtube.com/watch?v=krC5j1Ab44I&t=1455) - Downloading ysoserial to create a deserialization CommonCollections gadget
+
+[26:00](https://youtube.com/watch?v=krC5j1Ab44I&t=1560) - Creating a python script to exploit the deserialization vuln
+
+[31:00](https://youtube.com/watch?v=krC5j1Ab44I&t=1860) - Script complete!  We got a ping, testing the MyFaces serialization objects (did not work)
+
+[33:00](https://youtube.com/watch?v=krC5j1Ab44I&t=1980) - Modifying the script to run commands other than what ySoSerial provided
+
+[41:10](https://youtube.com/watch?v=krC5j1Ab44I&t=2470) - Script updates finished, trying to get a reverse shell via nishang (did not work)
+
+[42:40](https://youtube.com/watch?v=krC5j1Ab44I&t=2560) - Trying Invoke-WebRequest, because Net.WebClient did not work.  (testing for constrained mode)
+
+[45:00](https://youtube.com/watch?v=krC5j1Ab44I&t=2700) - Downloading netcat to upload to the box
+
+[46:00](https://youtube.com/watch?v=krC5j1Ab44I&t=2760) - Netcat returned a powershell reverse shell 
+
+[47:20](https://youtube.com/watch?v=krC5j1Ab44I&t=2840) - Discovering Backup.zip, downloading, using readpst to convert it to a plaintext mbox file
+
+[50:00](https://youtube.com/watch?v=krC5j1Ab44I&t=3000) - Using evolution to view mbox file and find Batman's password
+
+[52:45](https://youtube.com/watch?v=krC5j1Ab44I&t=3165) - Using Powershell's Invoke-Command to execute commands as Batman (like runas)
+
+[55:40](https://youtube.com/watch?v=krC5j1Ab44I&t=3340) - Reverse shell as batman returned!  Running a few commands to find out he is localadmin but needs to break out of UAC
+
+[58:10](https://youtube.com/watch?v=krC5j1Ab44I&t=3490) - Unintended: Using net use to mount c$ and view the flag
+
+[59:30](https://youtube.com/watch?v=krC5j1Ab44I&t=3570) - Checking github hfiref0x/UACME to find a UAC Bypass.  Chose one by a fellow HTB Member
+
+[01:02:10](https://youtube.com/watch?v=krC5j1Ab44I&t=3730) - Using GreatSCT/MSBuild to launch Meterpreter
+
+[01:02:45](https://youtube.com/watch?v=krC5j1Ab44I&t=3765) - While GreatSCT installs, create a DLL to return a reverse shell
+
+[01:06:00](https://youtube.com/watch?v=krC5j1Ab44I&t=3960) - copying the DLL into c:\users\batman\appdata\local\microsoft\windowsapps
+
+[01:08:30](https://youtube.com/watch?v=krC5j1Ab44I&t=4110) - Using GreatSCT to generate payloads
+
+[01:11:50](https://youtube.com/watch?v=krC5j1Ab44I&t=4310) - Getting a Meterpreter Session then migrating into an interactive process
+
+[01:17:45](https://youtube.com/watch?v=krC5j1Ab44I&t=4665) - Running SystemPropertiesAdvanced.exe, which elevates and executes our dll
+
+-----------------------------------------------------------
+
+ippsec: [HackTheBox - Fortune](https://youtube.com/watch?v=_BLd046r-co)
+
+0xdf: [HTB: Fortune](https://0xdf.gitlab.io//2019/08/03/htb-fortune.html)
+
+[01:04](https://youtube.com/watch?v=_BLd046r-co&t=64) - Begin of recon
+
+[04:41](https://youtube.com/watch?v=_BLd046r-co&t=281) - Exploring the web page on port 80
+
+[06:02](https://youtube.com/watch?v=_BLd046r-co&t=362) - Using wfuzz to do a special character fuzz to identify odd behavior and discover command injection
+
+[11:06](https://youtube.com/watch?v=_BLd046r-co&t=666) - Creating a hotkey in Burpsuite to send requests in repeater pane
+
+[11:50](https://youtube.com/watch?v=_BLd046r-co&t=710) - Start of creating a python program to automate this
+
+[17:30](https://youtube.com/watch?v=_BLd046r-co&t=1050) - Script finished
+
+[18:30](https://youtube.com/watch?v=_BLd046r-co&t=1110) - Exploring /var/appsrv 
+
+[21:15](https://youtube.com/watch?v=_BLd046r-co&t=1275) - Exploring authpf
+
+[22:30](https://youtube.com/watch?v=_BLd046r-co&t=1350) - Hunting for the signing key for the CA to view HTTPS
+
+[24:40](https://youtube.com/watch?v=_BLd046r-co&t=1480) - Copying the certificates to our box
+
+[26:00](https://youtube.com/watch?v=_BLd046r-co&t=1560) - Creating and signing a Client Certificate
+
+[28:50](https://youtube.com/watch?v=_BLd046r-co&t=1730) - Importing the certificate into FireFox
+
+[30:49](https://youtube.com/watch?v=_BLd046r-co&t=1849) - Discovering the reason our certificate isn't working (time of server is behind)
+
+[31:50](https://youtube.com/watch?v=_BLd046r-co&t=1910) - Accessing the HTTPS Website to get a SSH key for NFSUSER
+
+[33:40](https://youtube.com/watch?v=_BLd046r-co&t=2020) - Discovering additional ports are open after using SSH with NFSUSER
+
+[34:45](https://youtube.com/watch?v=_BLd046r-co&t=2085) - Installing the NFS-COMMON package to get the showmount binary
+
+[35:10](https://youtube.com/watch?v=_BLd046r-co&t=2110) - Mounting a NFS Share with Version 2
+
+[36:00](https://youtube.com/watch?v=_BLd046r-co&t=2160) - Editing our User ID on our box to gain access to the NFS Directories
+
+[37:00](https://youtube.com/watch?v=_BLd046r-co&t=2220) - Reading mail to discover that the root password is set to the Postgres databases root pw
+
+[37:30](https://youtube.com/watch?v=_BLd046r-co&t=2250) - Testing if we could setup a SetUID Binary with this NFS (Check Jail Video for this being successful)
+
+[40:20](https://youtube.com/watch?v=_BLd046r-co&t=2420) - SSH into the box as Charlie and dumping the database
+
+[43:40](https://youtube.com/watch?v=_BLd046r-co&t=2620) - Exploring the source code to the web application
+
+[47:00](https://youtube.com/watch?v=_BLd046r-co&t=2820) - Copying the crypto python script to our box, which will let us decrypt it
+
+[47:40](https://youtube.com/watch?v=_BLd046r-co&t=2860) - Copying the secrets into the crypto python script and decrypting the password
+
+-----------------------------------------------------------
+
 ippsec: [HackTheBox - CTF](https://youtube.com/watch?v=51JQg202csw)
 
 0xdf: [HTB: CTF](https://0xdf.gitlab.io//2019/07/20/htb-ctf.html)
@@ -343,6 +523,8 @@ ippsec: [HackTheBox - Flujab](https://youtube.com/watch?v=_f9Xygr-qHU)
 -----------------------------------------------------------
 
 ippsec: [HackTheBox - Help](https://youtube.com/watch?v=XB8CbhfOczU)
+
+0xdf: [HTB: Helpline](https://0xdf.gitlab.io//2019/08/17/htb-helpline.html)
 
 0xdf: [HTB: Help](https://0xdf.gitlab.io//2019/06/08/htb-help.html)
 
